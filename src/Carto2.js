@@ -1,150 +1,634 @@
-import logo from './logo.svg';
-import './Carto.css';
-
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+import React, { useState, useEffect } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import highchartsMap from "highcharts/modules/map";
-import React from 'react'
-import topo from './fr-all.geo.json'
+import { Col, Row, Container} from "react-bootstrap";
+import proj4 from "proj4";
+import mapData_metro from "./topo_fm";
+import mapData_reu from "./topo_reu";
+import mapData_may from "./topo_may";
+import mapData_guy from "./topo_guy";
+import mapData_mart from "./topo_mart";
+import mapData_guad from "./topo_guad";
+import mapData_tahiti_moorea from "./topo_tahiti_moorea";
+import mapData_uturoa from "./topo_uturoa";
+import mapData_futuna from "./topo_futuna";
+import mapData_wallis from "./topo_wallis";
+import mapData_nc from "./topo_nc";
+import mapData_st_martin from "./topo_st_martin";
+import data from "./data2"
+import './styles.css';
 
-highchartsMap(Highcharts);
+highchartsMap(Highcharts); // Initialize the map module
 
+if (typeof window !== "undefined") {
+  window.proj4 = window.proj4 || proj4;
+}
 
-const data = [
-  ['fr-cor', 10], ['fr-bre', 11], ['fr-pdl', 12], ['fr-pac', 13],
-  ['fr-occ', 14], ['fr-naq', 15], ['fr-bfc', 16], ['fr-cvl', 17],
-  ['fr-idf', 18], ['fr-hdf', 19], ['fr-ara', 20], ['fr-ges', 45],
-  ['fr-nor', 22], ['fr-lre', 23], ['fr-may', 24], ['fr-gf', 25],
-  ['fr-mq', 26], ['fr-gua', 27]
-];
-
-
-const chart = Highcharts.mapChart('container', {
+const MapOptions_metro = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
   title: {
-      text: 'Highcharts Maps basic demo '
-  },  
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
   mapNavigation: {
-    enabled: true,
-    buttonOptions: {
-        verticalAlign: 'bottom'
-    }
+    enabled: false
   },
-    series: {
-      mapData: topo
-    }
-});
-
-const InteractiveMap = () => (
-  <>
-    <div id="container" />
-  </>
-);
-
-export default InteractiveMap;
-
-/*
-import React from 'react';
-import { render } from 'react-dom';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import mapFrance from './fr-all.geo.json';
-
-// Load Highcharts modules
-require('highcharts/modules/map')(Highcharts);
-
-var data = [
-  ['ae', 37],
-  ['af', 44],
-  ['am', 20],
-  ['az', 19],
-  ['bd', 9],
-  ['bh', 12],
-  ['bn', 43],
-  ['bt', 26],
-  ['cn', 70],
-  ['cnm', 33],
-  ['cy', 48],
-  ['ge', 27],
-  ['id', 65],
-  ['il', 29],
-  ['in', 65],
-  ['iq', 36],
-  ['ir', 70],
-  ['jk', 40],
-  ['jo', 31],
-  ['jp', 100],
-  ['kg', 52],
-  ['kh', 25],
-  ['kp', 45],
-  ['kr', 70],
-  ['kw', 35],
-  ['kz', 28],
-  ['la', 38],
-  ['lb', 46],
-  ['lk', 51],
-  ['mm', 13],
-  ['mn', 34],
-  ['my', 18],
-  ['nc', 47],
-  ['np', 50],
-  ['om', 5],
-  ['ph', 1],
-  ['pk', 39],
-  ['qa', 41],
-  ['ru', 70],
-  ['sa', 2],
-  ['sg', 65],
-  ['sh', 17],
-  ['sp', 10],
-  ['sy', 30],
-  ['th', 4],
-  ['tj', 22],
-  ['tl', 24],
-  ['tm', 32],
-  ['tr', 65],
-  ['tw', 49],
-  ['uz', 23],
-  ['vn', 21],
-  ['ye', 6]
-];
-
-const mapOptions = {
-  title: {
-    text: ''
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
   },
-  colorAxis: {
-    min: 0,
-    stops: [[0.4, '#ffff00'], [0.65, '#bfff00'], [1, '	#40ff00']]
-  },
-
   series: [
     {
-      mapData: mapFrance,
-      name: 'France',
-      data: data
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_metro,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Mahina",z:29.0,lat:-17.54,lon:-149.47},{keyword:"Noum\u00e9a",z:5152.0,lat:-22.26,lon:166.457},{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
     }
   ]
 };
 
-// Render app with demo chart
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Demos</h1>
+const MapOptions_reu = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_reu,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
 
-        <h2>Highmaps</h2>
-        <HighchartsReact
-          options={mapOptions}
-          constructorType={'mapChart'}
-          highcharts={Highcharts}
-        />
-      </div>
-    );
-  }
-}
+const MapOptions_guy = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_guy,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
 
-render(<App />, document.getElementById('root'));
+const MapOptions_may = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_may,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
 
-export default App;
-*/
+const MapOptions_mart = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_mart,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions_guad = {
+  chart: {
+    map: "countries/fr/fr-all"
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_guad,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions = {
+  chart: {
+    map: mapData_tahiti_moorea
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_tahiti_moorea,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Mahina",z:29.0,lat:-17.54,lon:-149.47}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions_uturoa = {
+  chart: {
+    map: mapData_uturoa,
+    width: 100
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_uturoa,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions_wallis = {
+  chart: {
+    map: mapData_wallis
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_wallis,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions_nc = {
+  chart: {
+    map: mapData_nc
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_nc,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{keyword:"tyty",z:5152.0,lat:-22.26,lon:166.457}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+};
+
+const MapOptions_st_martin = {
+  chart: {
+    map: mapData_st_martin,
+  },
+  title: {
+    text: " "
+  },
+  credits: {
+    enabled: false
+  },
+  mapNavigation: {
+    enabled: false
+  },
+  tooltip: {
+    headerFormat: "",
+    pointFormat: "lat: {point.lat}, lon: {point.lon}"
+  },
+  series: [{
+    type: "map",
+    joinBy: 'name', // <- mapping 'name' in data to 'name' in mapData
+    keys: ['name', 'value'],
+    data: [{name:"Saint-Martin",value:76.0}],
+    mapData: mapData_st_martin
+}],
+/*
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_st_martin,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    },
+    {
+      // Specify points using lat/lon
+      type: "mapbubble",
+      name: "Effectifs",
+      color: "#4169E1",
+      data: [{name:"Saint-Martin",z:76.0,lat:493343,lon:1999955}],
+      cursor: "pointer",
+      point: {
+        events: {
+          click: function() {
+            console.log(this.keyword);
+          }
+        }
+      }
+    }
+  ]
+  */
+};
+
+
+
+const App = () => (
+  <Container>
+    France metropolitaine
+      <Row>
+        <Col md={6} className="Cadre">
+          <HighchartsReact
+            highcharts={Highcharts}
+            constructorType={"mapChart"}
+            options={MapOptions_metro}
+          />
+        </Col>
+        <Col md={6}>
+          <Container fluid>
+            Départements d'outre-mer
+            <Row className="Cadre">
+              <Col>
+              La Réunion
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_reu}
+                  style={{ backgroundColor: "lightblue", height: "10px" }}
+                />
+              </Col>
+              <Col>
+              Guyane
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_guy}
+                />
+              </Col>
+              <Col>
+              Gaudeloupe
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_guad}
+                />
+              </Col>
+              <Col>
+              Mayotte
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_may}
+                />
+              </Col>
+              <Col>
+              Martinique
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_mart}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </Col>
+        Collectivités d'outre-mer
+        <Col md={12} className="Cadre">
+          <Container fluid>
+            <Row>
+            <Col>
+                Uturoa
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_uturoa}
+                />
+            </Col>
+            <Col>
+                Moorea et Tahiti
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions}
+                />
+              </Col>
+              <Col>
+              Wallis et Futuna
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_wallis}
+                />
+              </Col>
+              <Col>
+              Nouvelle Calédonie
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_nc}
+                />
+              </Col>
+              <Col>
+              Saint-Martin
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_st_martin}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </Col>
+      </Row>
+  </Container>
+)
+
+export default App 

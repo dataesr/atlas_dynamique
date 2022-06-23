@@ -1,6 +1,3 @@
-import topo_wallis from './coord_wallis'
-import topo_tahiti from './coord_tahiti'
-
 const map ={
 	"title": "France",
 	"version": "2.0.1",
@@ -2079,40 +2076,6 @@ const map ={
 						[3415, 8756]
 					]
 				]
-			}
-		},
-		{
-			"type": "Feature",
-			"id": "FR.WAL",
-			"properties": {
-				"hc-group": "admin1",
-				"hc-key": "fr-wal",
-				"hc-a2": "WA",
-				"name": "Wallis",
-				"iso_3166_2": "FR-WAL",
-				"hc-middle-x": 0.5,
-				"hc-middle-y": 0.5
-			},
-			"geometry": {
-				"type": "MultiPolygon",
-				"coordinates": topo_wallis
-			}
-		},
-		{
-			"type": "Feature",
-			"id": "FR.TAH",
-			"properties": {
-				"hc-group": "admin1",
-				"hc-key": "fr-tah",
-				"hc-a2": "TA",
-				"name": "Tahiti",
-				"iso_3166_2": "FR-TAH",
-				"hc-middle-x": 0.5,
-				"hc-middle-y": 0.5
-			},
-			"geometry": {
-				"type": "MultiPolygon",
-				"coordinates": topo_tahiti
 			}
 		}
 	]
