@@ -1,3 +1,19 @@
 .Cadre {
     border: 1px solid #000;
+} 
+
+.pathClass {
+    fill: #fff;
+    stroke: rgb(12, 12, 12) ;
+  }
+
+.col {
+max-block-size: 500px;
+border: 1px ;
+width: 15%;
+height: 500px;
+border: 1px solid #000;
+
 }
+
+

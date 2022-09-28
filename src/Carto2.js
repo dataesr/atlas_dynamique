@@ -28,12 +28,18 @@ if (typeof window !== "undefined") {
 const MapOptions_metro = {
   chart: {
     map: "countries/fr/fr-all"
-  },
+},
   title: {
     text: " "
   },
   credits: {
-    enabled: false
+    enabled: false,
+    position: {
+        align: 'left',
+        verticalAlign: 'bottom',
+        x: 0,
+        y: 0
+    }
   },
   mapNavigation: {
     enabled: false
@@ -70,9 +76,7 @@ const MapOptions_metro = {
 };
 
 const MapOptions_reu = {
-  chart: {
-    map: "countries/fr/fr-all"
-  },
+  
   title: {
     text: " "
   },
@@ -93,7 +97,22 @@ const MapOptions_reu = {
       mapData: mapData_reu,
       borderColor: "#A0A0A0",
       nullColor: "rgba(200, 200, 200, 0.3)",
-      showInLegend: false
+      showInLegend: false,
+      /*
+      spacingTop: 0,
+      spacingRight: 0,
+      spacingBottom: 0,
+      spacingLeft: 0,
+      plotBorderWidth: 0,
+      margin: [0,0,0,0],
+      width: "100px",
+      height: "100px",
+      position: {
+        align: 'left',
+        verticalAlign: 'bottom',
+        x: -10,
+        y: 10
+    }*/
     },
     {
       // Specify points using lat/lon
@@ -102,6 +121,7 @@ const MapOptions_reu = {
       color: "#4169E1",
       data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -114,9 +134,6 @@ const MapOptions_reu = {
 };
 
 const MapOptions_guy = {
-  chart: {
-    map: "countries/fr/fr-all"
-  },
   title: {
     text: " "
   },
@@ -146,6 +163,7 @@ const MapOptions_guy = {
       color: "#4169E1",
       data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -190,6 +208,7 @@ const MapOptions_may = {
       color: "#4169E1",
       data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -234,6 +253,7 @@ const MapOptions_mart = {
       color: "#4169E1",
       data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -278,6 +298,7 @@ const MapOptions_guad = {
       color: "#4169E1",
       data: [{keyword:"Amb\u00e9rieu-en-Bugey",z:147.0,lat:45.9608475114,lon:5.3729257777},{keyword:"Bellignat",z:103.0,lat:46.2373497134,lon:5.6360052884},{keyword:"Valserh\u00f4ne",z:35.0,lat:46.1067901755,lon:5.8320273646},{keyword:"Bourg-en-Bresse",z:2596.0,lat:46.2051520382,lon:5.246021255},{keyword:"Cayenne",z:4710.0,lat:5.0217374283,lon:-52.5012511113},{keyword:"Kourou",z:250.0,lat:4.9336067701,lon:-52.7663314416},{keyword:"Macouria",z:67.0,lat:4.9823846217,lon:-52.5084392425},{keyword:"Mana",z:57.0,lat:4.982857479,lon:-53.6480364932},{keyword:"Matoury",z:24.0,lat:4.8317935103,lon:-52.3435609813},{keyword:"Remire-Montjoly",z:121.0,lat:4.8843712859,lon:-52.2788402688},{keyword:"Saint-Laurent-du-Maroni",z:67.0,lat:4.9647439863,lon:-53.9832113662}],
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -320,8 +341,10 @@ const MapOptions = {
       type: "mapbubble",
       name: "Effectifs",
       color: "#4169E1",
-      data: [{keyword:"Mahina",z:29.0,lat:-17.54,lon:-149.47}],
+      data: [{keyword: "Moorea-Maiao",z:50.0}],
+      joinBy: "keyword",
       cursor: "pointer",
+      showInLegend: false,
       point: {
         events: {
           click: function() {
@@ -360,7 +383,7 @@ const MapOptions_uturoa = {
       nullColor: "rgba(200, 200, 200, 0.3)",
       showInLegend: false
     },
-    {
+    /*{
       // Specify points using lat/lon
       type: "mapbubble",
       name: "Effectifs",
@@ -374,7 +397,7 @@ const MapOptions_uturoa = {
           }
         }
       }
-    }
+    }*/
   ]
 };
 
@@ -404,7 +427,7 @@ const MapOptions_wallis = {
       nullColor: "rgba(200, 200, 200, 0.3)",
       showInLegend: false
     },
-    {
+    /*{
       // Specify points using lat/lon
       type: "mapbubble",
       name: "Effectifs",
@@ -418,7 +441,7 @@ const MapOptions_wallis = {
           }
         }
       }
-    }
+    }*/
   ]
 };
 
@@ -448,7 +471,7 @@ const MapOptions_nc = {
       nullColor: "rgba(200, 200, 200, 0.3)",
       showInLegend: false
     },
-    {
+    /*{
       // Specify points using lat/lon
       type: "mapbubble",
       name: "Effectifs",
@@ -462,14 +485,11 @@ const MapOptions_nc = {
           }
         }
       }
-    }
+    }*/
   ]
 };
 
 const MapOptions_st_martin = {
-  chart: {
-    map: mapData_st_martin,
-  },
   title: {
     text: " "
   },
@@ -483,7 +503,16 @@ const MapOptions_st_martin = {
     headerFormat: "",
     pointFormat: "lat: {point.lat}, lon: {point.lon}"
   },
-  series: [{
+  series: [
+    {
+      // Use the gb-all map with no data as a basemap
+      name: "Basemap",
+      mapData: mapData_st_martin,
+      borderColor: "#A0A0A0",
+      nullColor: "rgba(200, 200, 200, 0.3)",
+      showInLegend: false
+    }]
+  /*series: [{
     type: "map",
     joinBy: 'name', // <- mapping 'name' in data to 'name' in mapData
     keys: ['name', 'value'],
@@ -523,111 +552,92 @@ const MapOptions_st_martin = {
 
 const App = () => (
   <Container>
-    France metropolitaine
-      <Row>
-        <Col md={6} className="Cadre">
-          <HighchartsReact
-            highcharts={Highcharts}
-            constructorType={"mapChart"}
-            options={MapOptions_metro}
-          />
-        </Col>
-        <Col md={6}>
-          <Container fluid>
-            Départements d'outre-mer
-            <Row className="Cadre">
-              <Col>
+    <Row>
+        <Col md={2} className="col">
+          
               La Réunion
-                <HighchartsReact
-                  highcharts={Highcharts}
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_reu}
-                  style={{ backgroundColor: "lightblue", height: "10px" }}
+                  containerProps={{ style: { height: "80px" } }}
                 />
-              </Col>
-              <Col>
-              Guyane
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  constructorType={"mapChart"}
-                  options={MapOptions_guy}
-                />
-              </Col>
-              <Col>
-              Gaudeloupe
-                <HighchartsReact
-                  highcharts={Highcharts}
+              Guadeloupe
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_guad}
+                  containerProps={{ style: { height: "70px" } }}
                 />
-              </Col>
-              <Col>
-              Mayotte
-                <HighchartsReact
-                  highcharts={Highcharts}
+              Guyane
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
-                  options={MapOptions_may}
+                  options={MapOptions_guy}
+                  containerProps={{ style: { height: "80px" } }}
                 />
-              </Col>
-              <Col>
               Martinique
-                <HighchartsReact
-                  highcharts={Highcharts}
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_mart}
+                  containerProps={{ style: { height: "70px" } }}
                 />
-              </Col>
-            </Row>
-          </Container>
-        </Col>
-        Collectivités d'outre-mer
-        <Col md={12} className="Cadre">
-          <Container fluid>
-            <Row>
-            <Col>
-                Uturoa
-                <HighchartsReact
-                  highcharts={Highcharts}
+                Mayotte
+                <HighchartsReact 
+                  highcharts={Highcharts} 
+                  constructorType={"mapChart"}
+                  options={MapOptions_may}
+                  containerProps={{ style: { height: "70px" } }}
+                />
+        </Col> 
+        <Col md={2} className="col">
+              Uturoa
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_uturoa}
+                  containerProps={{ style: { height: "50px" } }}
                 />
-            </Col>
-            <Col>
-                Moorea et Tahiti
-                <HighchartsReact
-                  highcharts={Highcharts}
+            
+              Moorea et Tahiti
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions}
+                  containerProps={{ style: { height: "80px" } }}
                 />
-              </Col>
-              <Col>
-              Wallis et Futuna
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  constructorType={"mapChart"}
-                  options={MapOptions_wallis}
-                />
-              </Col>
-              <Col>
-              Nouvelle Calédonie
-                <HighchartsReact
-                  highcharts={Highcharts}
+              Nouvelle-Calédonie
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_nc}
+                  containerProps={{ style: { height: "100px" } }}
                 />
-              </Col>
-              <Col>
-              Saint-Martin
-                <HighchartsReact
-                  highcharts={Highcharts}
+              Futuna et Wallis
+                <HighchartsReact 
+                  highcharts={Highcharts} 
+                  constructorType={"mapChart"}
+                  options={MapOptions_wallis}
+                  containerProps={{ style: { height: "70px" } }}
+                />
+                Saint-Martin
+                <HighchartsReact 
+                  highcharts={Highcharts} 
                   constructorType={"mapChart"}
                   options={MapOptions_st_martin}
+                  containerProps={{ style: { height: "50px" } }}
+                />
+        </Col>
+        <Col md={6} className="Cadre" >
+        France metropolitaine
+                <HighchartsReact 
+                  highcharts={Highcharts}
+                  constructorType={"mapChart"}
+                  options={MapOptions_metro}
                 />
               </Col>
-            </Row>
-          </Container>
-        </Col>
-      </Row>
+    </Row> 
   </Container>
 )
 
