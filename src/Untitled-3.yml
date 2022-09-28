@@ -1,9 +1,10 @@
 
 #update
-
-git remote add origin https://github.com/hfsllt/atlas_dynamique.git
-git branch -M main
-git push -u origin main
+git init
+git add . 
+git commit -m "update"
+git push https://github.com/hfsllt/ANR.git
+git push https://github.com/hfsllt/atlas_dynamique.git
 
 #create
 echo "# atlas_dynamique" >> README.md
@@ -12,4 +13,7 @@ git add README.md
 git commit -m "first commit"
 git branch -M main
 git remote set-url origin git@github.com:hfsllt/atlas_dynamique.git
+git remote add origin https://github.com/hfsllt/atlas_dynamique.git
+git clone https://github.com/hfsllt/atlas_dynamique.git
 git push -u origin main
+
