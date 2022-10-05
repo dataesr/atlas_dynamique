@@ -1,0 +1,9 @@
+{
+  "name": "reaselect-poc",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^5.2.2",
+    "react-select": "^5.4.0"
+  }
+}
