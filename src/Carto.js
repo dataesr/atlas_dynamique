@@ -14,89 +14,84 @@ if (typeof window !== "undefined") {
   window.proj4 = window.proj4 || proj4;
 }
 
-const actions = [
-  { value: "STS", label: "STS - Section de Technicien Supérieur" },
-  { value: "IUT", label: "IUT - Institut Universitaire de Technologie" },
-  { value: "UNIV", label: "Universités" }
+const types = [
+  { key : "UNIV", label: "UNIV" },
+  { key : "EC_COM", label: "EC_COM" }
 ];
 
-console.log(typeof mapDataIE);
-console.log(Object.getPrototypeOf(mapData) === Map.prototype);
 
-const staticOptions = {
-  chart: {
-    map: "countries/fr/fr-all"
-  },
-  title: {
-    text: " "
-  },
-  credits: {
-    enabled: false
-  },
-  mapNavigation: {
-    enabled: false
-  },
-  tooltip: {
-    headerFormat: "",
-    pointFormat: "lat: {point.lat}, lon: {point.lon}"
-  },
-  series: [
-    {
-      // Use the gb-all map with no data as a basemap
-      name: "Basemap",
-      mapData: mapData,
-      borderColor: "#A0A0A0",
-      nullColor: "rgba(200, 200, 200, 0.3)",
-      showInLegend: false
+
+function filteredData(data, type) {
+  let newData = []
+  for(let i =0; i< data.length; i++){
+    if(data[i].rgp3 === type.key){
+      newData.push(data[i])
+    }
+  }
+  return (newData)
+}; 
+
+export default function mamap() {
+  const [type, setType] = useState(types[0]);
+  console.log(type)
+  const staticOptions = {
+    chart: {
+      map: "countries/fr/fr-all"
     },
-    {
-      // Specify points using lat/lon
-      type: "mapbubble",
-      name: "Locations",
-      color: "#4169E1",
-      data,
-      
-      cursor: "pointer",
-      point: {
-        events: {
-          click: function() {
-            console.log(this.keyword);
+    title: {
+      text: " "
+    },
+    credits: {
+      enabled: false
+    },
+    mapNavigation: {
+      enabled: false
+    },
+    tooltip: {
+      headerFormat: "",
+      pointFormat: "{this.rgp3}"
+    },
+    series: [
+      {
+        // Use the gb-all map with no data as a basemap
+        name: "Basemap",
+        mapData: mapData,
+        borderColor: "#A0A0A0",
+        nullColor: "rgba(200, 200, 200, 0.3)",
+        showInLegend: false
+      },
+      {
+        // Specify points using lat/lon
+        type: "mapbubble",
+        name: "Locations",
+        color: "#4169E1",
+        //data,
+        data: filteredData(data,type),
+  
+        cursor: "pointer",
+        point: {
+          events: {
+            click: function () {
+              console.log(this.rgp3);
+            }
           }
         }
       }
-    }
-  ]
-};
+    ]
+  };
 
-
-/*
-export default ({ data }) => {
-  const [options_metro, setOptions_metro] = useState({});
-  useEffect(() => {
-    setOptions_metro({
-      ...staticOptions_metro,
-      series: [
-        {
-          ...staticOptions_metro.series[0],
-          data: data
-        }
-      ]
-    });
-  }, [data]);
-*/
-
-export default function mamap () {
   return (
     <>
-      <div className="row" style= {divStyle}>
-      <dropdown/>
-    </div><div className="row">
+      <select value={type} onChange={event => setType(event.target.value)} >
+        {types.map((item) => <option key={item.key} value={item.label} > {item.label} </option>)}
+      </select>
+      <div className="row" viewbox="0 0 100 100">
         <HighchartsReact
           highcharts={Highcharts}
           constructorType={"mapChart"}
-          options={staticOptions} />
-      </div></>
+          options={staticOptions}
+        />
+      </div>
+    </>
   );
-//}
-
 }
