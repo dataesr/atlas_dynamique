@@ -15,8 +15,8 @@ if (typeof window !== "undefined") {
 }
 
 const types = [
-  { key : "UNIV", label: "UNIV" },
-  { key : "EC_COM", label: "EC_COM" }
+  { key : "UNIV", label: "Universités" },
+  { key : "EC_COM", label: "Ecoles de commerce" }
 ];
 
 
@@ -24,7 +24,7 @@ const types = [
 function filteredData(data, type) {
   let newData = []
   for(let i =0; i< data.length; i++){
-    if(data[i].rgp3 === type.key){
+    if(data[i].rgp3 === type){
       newData.push(data[i])
     }
   }
@@ -32,8 +32,9 @@ function filteredData(data, type) {
 }; 
 
 export default function mamap() {
-  const [type, setType] = useState(types[0]);
+  const [type, setType] = useState(types[0].key)
   console.log(type)
+
   const staticOptions = {
     chart: {
       map: "countries/fr/fr-all"
@@ -82,8 +83,8 @@ export default function mamap() {
 
   return (
     <>
-      <select value={type} onChange={event => setType(event.target.value)} >
-        {types.map((item) => <option key={item.key} value={item.label} > {item.label} </option>)}
+      <select value={type.key} onChange={event => setType(event.target.value)} >
+        {types.map((type) => <option key={type.key} value={type.key} > {type.label} </option>)}
       </select>
       <div className="row" viewbox="0 0 100 100">
         <HighchartsReact
