@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsMap from "highcharts/modules/map";
-import { Col, Row, Container} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import proj4 from "proj4";
 import mapData from "./FM_DOM_COML93";
 import data from "./atlas_uu_l93.js";
-import divStyle from './styles.css';
 import StepRangeSlider from "react-step-range-slider";
 
 highchartsMap(Highcharts);
