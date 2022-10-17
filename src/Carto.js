@@ -28,10 +28,10 @@ const types = [
   {
     key: "IUFM",
     label:
-      "Institut national supérieir du professorat et de l'éducation - INSPE"
+      "Institut universitaire de formation des maîtres - IUFM"
   },
   { key: "STS", label: "Section de techniciens supérieurs - STS" },
-  { key: "IUT", label: "Instituts universitaires de technologie - IUT" },
+  { key: "INP", label: "Instituts nationaux polytechniques - INP" },
   { key: "CPGE", label: "Classes préparatoires aux grandes écoles - CPGE" }
 ];
 
