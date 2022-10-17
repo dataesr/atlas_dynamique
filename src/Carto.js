@@ -25,17 +25,13 @@ const types = [
   { key: "EPEU", label: "Etablissements privés d'enseignement universitaire" },
   { key: "GE", label: "Grands établissements" },
   { key: "ING_autres", label: "Autres formations d'ingénieurs" },
-  {
-    key: "IUFM",
-    label:
-      "Institut universitaire de formation des maîtres - IUFM"
-  },
+  {key: "IUFM",label:"Institut universitaire de formation des maîtres - IUFM"},
   { key: "STS", label: "Section de techniciens supérieurs - STS" },
   { key: "INP", label: "Instituts nationaux polytechniques - INP" },
   { key: "CPGE", label: "Classes préparatoires aux grandes écoles - CPGE" }
 ];
 
-const range = [
+const years = [
   {value: 2001,step: 1},
   {value: 2002,step: 1},
   {value: 2003,step: 1},
@@ -70,9 +66,9 @@ function filteredData(data, year, type) {
 
 
 export default function mamap() {
-  const [type, setType] = useState(types[0].key);
+  const [type, setType] = useState('UNIV');
 
-  const [year, setYear] = useState(range[19].value);
+  const [year, setYear] = useState(2020);
 
   const staticOptions = {
     chart: {
@@ -89,7 +85,7 @@ export default function mamap() {
     },
     tooltip: {
       headerFormat: "",
-      pointFormat: "type d'enseignement: {this.rgp3}"
+      pointFormat: `type d'enseignement: {this.rgp3}`
     },
     series: [
       {
@@ -116,6 +112,8 @@ export default function mamap() {
       }
     ]
   };
+  console.log(staticOptions);
+  
 
   return (
     <>
@@ -135,7 +133,7 @@ export default function mamap() {
       <div className="App" style={{ padding: 50 }}>
       <StepRangeSlider
         value={year}
-        range={range}
+        range={years}
         onChange={(value) => setYear(value)}
       />
       </div>
