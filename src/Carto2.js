@@ -6,13 +6,10 @@ import { Col, Row } from "react-bootstrap";
 import proj4 from "proj4";
 import mapData from "./FM_DOM_COML93";
 import data from "./atlas_uu_l93.js";
-import dataTousTypes from "./atlas_uu_l93.js";
-import dataTousAnnee from "./atlas_uu_l93.js";
-import dataTous from "./atlas_uu_l93.js";
+import dataTousAnnees from "./atlas_uu_l93_type.js";
+import dataTousTypes from "./atlas_uu_l93_an.js";
+import dataTous from "./atlas_uu_l93_tous.js";
 import StepRangeSlider from "react-step-range-slider";
-import Slider from "./slider.js"
-import {RangeStepInput} from 'react-range-step-input';
-import "./styles.css"
 
 highchartsMap(Highcharts);
 
@@ -21,7 +18,8 @@ if (typeof window !== "undefined") {
 }
 
 const types = [
-  //{ key: "TOUS", label: "Tous les types d'enseignement supérieur" },
+  { key: "TOUS_Types_Annees", label: "Tous les types d'enseignement supérieur depuis 2001" },
+  { key: "TOUS", label: "Tous les types d'enseignement supérieur par an" },
   { key: "UNIV", label: "Universités" },
   { key: "EC_COM", label: "Écoles de commerce" },
   { key: "EC_PARAM", label: "Écoles paramedicales et sociales" },
@@ -32,7 +30,7 @@ const types = [
   { key: "EPEU", label: "Etablissements privés d'enseignement universitaire" },
   { key: "GE", label: "Grands établissements" },
   { key: "ING_autres", label: "Autres formations d'ingénieurs" },
-  {key: "IUFM",label:"Institut universitaire de formation des maîtres - IUFM"},
+  { key: "IUFM",label:"Institut universitaire de formation des maîtres - IUFM"},
   { key: "STS", label: "Section de techniciens supérieurs - STS" },
   { key: "INP", label: "Instituts nationaux polytechniques - INP" },
   { key: "CPGE", label: "Classes préparatoires aux grandes écoles - CPGE" }
@@ -61,37 +59,40 @@ const years = [
   {value: 2020}
 ];
 
-function filteredData(data, year, type) {
+function filteredData(data, dataTousTypes, dataTous, year, type) {
   let newData = [];
-/*   if (type === 'TOUS') {
-    for (let i = 0; i < data.length; i++) {
+  if (type === 'TOUS') {
+    for (let i = 0; i < dataTousTypes.length; i++) {
       if (dataTousTypes[i].rentree === `${year}`) {
         newData.push(dataTousTypes[i]);
       }
     }
     return newData;
-  }
-  else if (year === 'TOUS') {
-    for (let i = 0; i < data.length; i++) {
-      if ((data[i].rgp3 === type) && (data[i].rentree === `${year}`)) {
-        newData.push(data[i]);
+  }/*
+   else if (year === "2000") {
+    for (let i = 0; i < dataTousAnnees.length; i++) {
+      if (dataTousAnnees[i].rgp3 === type) {
+        newData.push(dataTousAnnees[i]);
       }
     }
     return newData;
+  } */
+  else if (type === "TOUS_Types_Annees") {
+    return dataTous;
   }  
-  else { */
+  else { 
     for (let i = 0; i < data.length; i++) {
       if ((data[i].rgp3 === type) && (data[i].rentree === `${year}`)) {
         newData.push(data[i]);
       }
     }
     return newData;
-  //} 
+  } 
 }
 
 
 export default function mamap() {
-  const [type, setType] = useState(types[0].key);
+  const [type, setType] = useState(types[15].key);
 
   const [year, setYear] = useState(years[0].value);
 
@@ -124,7 +125,7 @@ export default function mamap() {
         type: "mapbubble",
         name: "Locations",
         color: "#4169E1",
-        data: filteredData(data, year, type),
+        data: filteredData(data, dataTousTypes, dataTous, year, type),
 
         cursor: "pointer",
         point: {
@@ -143,7 +144,7 @@ export default function mamap() {
   return (
     <>
     <Row>
-      <Col lg ={3}>
+      <Col md={3}>
       <select
         value={type.key}
         onChange={(event) => setType(event.target.value)}
@@ -155,15 +156,15 @@ export default function mamap() {
           </option>
         ))}
       </select>
-      <div>
-      <RangeStepInput
-        min={2001} max={2020}
-        value={year} step={1}
+      <div className="App" style={{ padding: 50 }}>
+      <StepRangeSlider
+        value={year}
+        range={years}
         onChange={(value) => setYear(value)}
       />
       </div>
       </Col>
-      <Col lg ={7}>
+      <Col md={9}>
       <div className="row" >
         <HighchartsReact
           highcharts={Highcharts}
