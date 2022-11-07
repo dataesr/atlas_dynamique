@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useValue } from 'react';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsMap from "highcharts/modules/map";
@@ -6,11 +7,8 @@ import { Col, Row } from "react-bootstrap";
 import proj4 from "proj4";
 import mapData from "./FM_DOM_COML93";
 import data from "./atlas_uu_l93.js";
-import dataTousTypes from "./atlas_uu_l93.js";
-import dataTousAnnee from "./atlas_uu_l93.js";
-import dataTous from "./atlas_uu_l93.js";
+import { Box, Slider, Typography } from '@mui/material';
 import StepRangeSlider from "react-step-range-slider";
-import Slider from "./slider.js"
 import {RangeStepInput} from 'react-range-step-input';
 import "./styles.css"
 
@@ -39,61 +37,67 @@ const types = [
 ];
 
 const years = [
-  {value: 2001,step: 1},
-  {value: 2002,step: 1},
-  {value: 2003,step: 1},
-  {value: 2004,step: 1},
-  {value: 2005,step: 1},
-  {value: 2006,step: 1},
-  {value: 2007,step: 1},
-  {value: 2008,step: 1},
-  {value: 2009,step: 1},
-  {value: 2010,step: 1},
-  {value: 2011,step: 1},
-  {value: 2012,step: 1},
-  {value: 2013,step: 1},
-  {value: 2014,step: 1},
-  {value: 2015,step: 1},
-  {value: 2016,step: 1},
-  {value: 2017,step: 1},
-  {value: 2018,step: 1},
-  {value: 2019,step: 1},
-  {value: 2020}
+  {value: 2001,label: "2001"},
+  {value: 2002,label: "2002"},
+  {value: 2003,label: "2003"},
+  {value: 2004,label: "2004"},
+  {value: 2005,label: "2005"},
+  {value: 2006,label: "2006"},
+  {value: 2007,label: "2007"},
+  {value: 2008,label: "2008"},
+  {value: 2009,label: "2009"},
+  {value: 2010,label: "2010"},
+  {value: 2011,label: "2011"},
+  {value: 2012,label: "2012"},
+  {value: 2013,label: "2013"},
+  {value: 2014,label: "2014"},
+  {value: 2015,label: "2015"},
+  {value: 2016,label: "2016"},
+  {value: 2017,label: "2017"},
+  {value: 2018,label: "2018"},
+  {value: 2019,label: "2019"},
+  {value: 2020,label: "2020"}
 ];
+
+const SliderBar = () => {
+  const {
+    state: { year },
+    dispatch,
+  } = useValue();
+  return (
+    <Box sx={{ mt: 5 }}>
+      <Typography>Année: { year }</Typography>
+      <Slider
+        min={0}
+        max={19}
+        defaultValue={19}
+        valueLabelDisplay="auto"
+        marks={years}
+        value={year}
+        onChange={(e, price) =>
+          dispatch({ type: 'FILTER_PRICE', payload: price })
+        }
+      />
+    </Box>
+  );
+};
 
 function filteredData(data, year, type) {
   let newData = [];
-/*   if (type === 'TOUS') {
-    for (let i = 0; i < data.length; i++) {
-      if (dataTousTypes[i].rentree === `${year}`) {
-        newData.push(dataTousTypes[i]);
-      }
+  for (let i = 0; i < data.length; i++) {
+    if ((data[i].rgp3 === type) && (data[i].rentree === `${year}`)) {
+      newData.push(data[i]);
     }
-    return newData;
   }
-  else if (year === 'TOUS') {
-    for (let i = 0; i < data.length; i++) {
-      if ((data[i].rgp3 === type) && (data[i].rentree === `${year}`)) {
-        newData.push(data[i]);
-      }
-    }
-    return newData;
-  }  
-  else { */
-    for (let i = 0; i < data.length; i++) {
-      if ((data[i].rgp3 === type) && (data[i].rentree === `${year}`)) {
-        newData.push(data[i]);
-      }
-    }
-    return newData;
-  //} 
+  return newData;
 }
 
 
-export default function mamap() {
+export default function Mamap() {
   const [type, setType] = useState(types[0].key);
 
-  const [year, setYear] = useState(years[0].value);
+  //const [year, setYear] = useState(years[0].value);
+  
 
   const staticOptions = {
     chart: {
@@ -156,11 +160,7 @@ export default function mamap() {
         ))}
       </select>
       <div>
-      <RangeStepInput
-        min={2001} max={2020}
-        value={year} step={1}
-        onChange={(value) => setYear(value)}
-      />
+      <SliderBar />
       </div>
       </Col>
       <Col lg ={7}>
@@ -175,4 +175,6 @@ export default function mamap() {
       </Row>
     </>
   );
-}
+};
+
+
